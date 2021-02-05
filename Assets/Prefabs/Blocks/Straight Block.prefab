@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8151968225532460732
+--- !u!1 &6605160914004103896
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,53 +8,58 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8151968225532460735}
+  - component: {fileID: 6605160914004103903}
   m_Layer: 0
-  m_Name: T-Block
+  m_Name: Straight Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8151968225532460735
+--- !u!4 &6605160914004103903
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8151968225532460732}
+  m_GameObject: {fileID: 6605160914004103896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2919067580311120497}
-  - {fileID: 8734606221900566988}
-  - {fileID: 8734606221123541610}
-  - {fileID: 8734606222222805831}
+  - {fileID: 6033745048077375806}
+  - {fileID: 6033745047929471004}
+  - {fileID: 6033745049403863059}
+  - {fileID: 6033745048098293867}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2347652504247588644
+--- !u!1001 &6605160913901040958
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8151968225532460735}
+    m_TransformParent: {fileID: 6605160914004103903}
     m_Modifications:
     - target: {fileID: 242566905268152303, guid: 277d8b46f2c37433d8fd5a53a0940472,
         type: 3}
       propertyPath: m_Name
       value: Tetris Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 242566905268152303, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
         type: 3}
@@ -105,26 +110,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: add246c8075aa4606a732c9f59db8116, type: 2}
+      objectReference: {fileID: 2100000, guid: dbf040750e38544b98be8199959efa0c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 277d8b46f2c37433d8fd5a53a0940472, type: 3}
---- !u!4 &2919067580311120497 stripped
+--- !u!4 &6033745048098293867 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
     type: 3}
-  m_PrefabInstance: {fileID: 2347652504247588644}
+  m_PrefabInstance: {fileID: 6605160913901040958}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8151968223420132505
+--- !u!1001 &6605160914136972617
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8151968225532460735}
+    m_TransformParent: {fileID: 6605160914004103903}
     m_Modifications:
     - target: {fileID: 242566905268152303, guid: 277d8b46f2c37433d8fd5a53a0940472,
         type: 3}
       propertyPath: m_Name
       value: Tetris Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 242566905268152303, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
         type: 3}
@@ -185,26 +195,116 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: add246c8075aa4606a732c9f59db8116, type: 2}
+      objectReference: {fileID: 2100000, guid: dbf040750e38544b98be8199959efa0c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 277d8b46f2c37433d8fd5a53a0940472, type: 3}
---- !u!4 &8734606221900566988 stripped
+--- !u!4 &6033745047929471004 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
     type: 3}
-  m_PrefabInstance: {fileID: 8151968223420132505}
+  m_PrefabInstance: {fileID: 6605160914136972617}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8151968224247424831
+--- !u!1001 &6605160914274149483
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8151968225532460735}
+    m_TransformParent: {fileID: 6605160914004103903}
     m_Modifications:
     - target: {fileID: 242566905268152303, guid: 277d8b46f2c37433d8fd5a53a0940472,
         type: 3}
       propertyPath: m_Name
       value: Tetris Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 242566905268152303, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755622241903150650, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: dbf040750e38544b98be8199959efa0c, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 277d8b46f2c37433d8fd5a53a0940472, type: 3}
+--- !u!4 &6033745048077375806 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
+    type: 3}
+  m_PrefabInstance: {fileID: 6605160914274149483}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6605160915061656902
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6605160914004103903}
+    m_Modifications:
+    - target: {fileID: 242566905268152303, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_Name
+      value: Tetris Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 242566905268152303, guid: 277d8b46f2c37433d8fd5a53a0940472,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
         type: 3}
@@ -214,7 +314,7 @@ PrefabInstance:
     - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
         type: 3}
@@ -265,92 +365,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: add246c8075aa4606a732c9f59db8116, type: 2}
+      objectReference: {fileID: 2100000, guid: dbf040750e38544b98be8199959efa0c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 277d8b46f2c37433d8fd5a53a0940472, type: 3}
---- !u!4 &8734606221123541610 stripped
+--- !u!4 &6033745049403863059 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
     type: 3}
-  m_PrefabInstance: {fileID: 8151968224247424831}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &8151968225496118802
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8151968225532460735}
-    m_Modifications:
-    - target: {fileID: 242566905268152303, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_Name
-      value: Tetris Tile
-      objectReference: {fileID: 0}
-    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1755622241903150650, guid: 277d8b46f2c37433d8fd5a53a0940472,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: add246c8075aa4606a732c9f59db8116, type: 2}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 277d8b46f2c37433d8fd5a53a0940472, type: 3}
---- !u!4 &8734606222222805831 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 582677374747180373, guid: 277d8b46f2c37433d8fd5a53a0940472,
-    type: 3}
-  m_PrefabInstance: {fileID: 8151968225496118802}
+  m_PrefabInstance: {fileID: 6605160915061656902}
   m_PrefabAsset: {fileID: 0}
