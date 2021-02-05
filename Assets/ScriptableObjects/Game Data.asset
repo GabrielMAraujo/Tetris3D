@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d79fd5183769849199007c009dddd067, type: 3}
   m_Name: Game Data
   m_EditorClassIdentifier: 
-  startingPeriod: 0.5
+  startingPeriod: 1
   decrementPerLevel: 0.2

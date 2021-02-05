@@ -7,14 +7,18 @@ public class BlockController : MonoBehaviour
     //Timer to trigger block descent
     private float timer = 0;
     public Game game;
+    public PlayerInput playerInput;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        playerInput.OnHorizontalInputDown += OnHorizontalInputDown;
     }
 
-    // Update is called once per frame
+    private void OnDestroy()
+    {
+        playerInput.OnHorizontalInputDown -= OnHorizontalInputDown;
+    }
+
     void Update()
     {
         timer += Time.deltaTime;
@@ -29,5 +33,11 @@ public class BlockController : MonoBehaviour
 
             timer = 0;
         }
+    }
+
+    //Move the block horizontally if possible
+    private void OnHorizontalInputDown(int direction)
+    {
+        transform.position += Vector3.right * direction;
     }
 }
