@@ -12,11 +12,15 @@ public class BlockController : MonoBehaviour
     void Awake()
     {
         playerInput.OnHorizontalInputDown += OnHorizontalInputDown;
+        playerInput.OnRotateLeftDown += OnRotateLeft;
+        playerInput.OnRotateRightDown += OnRotateRight;
     }
 
     private void OnDestroy()
     {
         playerInput.OnHorizontalInputDown -= OnHorizontalInputDown;
+        playerInput.OnRotateLeftDown -= OnRotateLeft;
+        playerInput.OnRotateRightDown -= OnRotateRight;
     }
 
     void Update()
@@ -39,5 +43,17 @@ public class BlockController : MonoBehaviour
     private void OnHorizontalInputDown(int direction)
     {
         transform.position += Vector3.right * direction;
+    }
+
+
+    //Rotate block on z-axis
+    private void OnRotateLeft()
+    {
+        transform.eulerAngles += new Vector3(0, 0, 90);
+    }
+
+    private void OnRotateRight()
+    {
+        transform.eulerAngles += new Vector3(0, 0, -90);
     }
 }

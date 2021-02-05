@@ -9,7 +9,7 @@ public delegate void InputCallback();
 public class PlayerInput : MonoBehaviour
 {
     public event HorizontalInputCallback OnHorizontalInputDown;
-    public event InputCallback OnSpeedInputDown, OnSpeedInputUp;
+    public event InputCallback OnSpeedDown, OnSpeedUp, OnRotateLeftDown, OnRotateRightDown;
 
     // Update is called once per frame
     void Update()
@@ -27,12 +27,22 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetButtonDown("Speed"))
         {
-            OnSpeedInputDown.Invoke();
+            OnSpeedDown.Invoke();
         }
 
         if (Input.GetButtonUp("Speed"))
         {
-            OnSpeedInputUp.Invoke();
+            OnSpeedUp.Invoke();
+        }
+
+        if (Input.GetButtonDown("RotateLeft"))
+        {
+            OnRotateLeftDown.Invoke();
+        }
+
+        if (Input.GetButtonDown("RotateRight"))
+        {
+            OnRotateRightDown.Invoke();
         }
     }
 }

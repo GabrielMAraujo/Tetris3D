@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingPeriod: 1
   decrementPerLevel: 0.2
-  speedPeriod: 0.1
+  speedPeriod: 0.07

@@ -18,8 +18,8 @@ public class Game : MonoBehaviour
 
     private void Awake()
     {
-        playerInput.OnSpeedInputDown += OnSpeedInputDown;
-        playerInput.OnSpeedInputUp += OnSpeedInputUp;
+        playerInput.OnSpeedDown += OnSpeedInputDown;
+        playerInput.OnSpeedUp += OnSpeedInputUp;
     }
 
 
@@ -31,8 +31,8 @@ public class Game : MonoBehaviour
 
     private void OnDestroy()
     {
-        playerInput.OnSpeedInputDown -= OnSpeedInputDown;
-        playerInput.OnSpeedInputUp -= OnSpeedInputUp;
+        playerInput.OnSpeedDown -= OnSpeedInputDown;
+        playerInput.OnSpeedUp -= OnSpeedInputUp;
     }
 
     private void OnLevelUp()
