@@ -5,4 +5,5 @@ public class GameData : ScriptableObject
 {
     public float startingPeriod;
     public float decrementPerLevel;
+    public float speedPeriod;
 }

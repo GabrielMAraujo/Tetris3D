@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData: {fileID: 11400000, guid: 3de7ca192945a492cbecf6de569c9f58, type: 2}
+  playerInput: {fileID: 1557456258}
   currentPeriod: 0
 --- !u!1 &320174176
 GameObject:
