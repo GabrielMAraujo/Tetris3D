@@ -8,6 +8,9 @@ public class BlockController : MonoBehaviour
     private float timer = 0;
     public Game game;
     public PlayerInput playerInput;
+    public BlockControllerData blockControllerData;
+
+    private bool isRotating = false;
 
     void Awake()
     {
@@ -49,11 +52,43 @@ public class BlockController : MonoBehaviour
     //Rotate block on z-axis
     private void OnRotateLeft()
     {
-        transform.eulerAngles += new Vector3(0, 0, 90);
+        IEnumerator coroutine = Rotate(90f);
+        StartCoroutine(coroutine);
     }
 
     private void OnRotateRight()
     {
-        transform.eulerAngles += new Vector3(0, 0, -90);
+        IEnumerator coroutine = Rotate(-90f);
+        StartCoroutine(coroutine);
+    }
+
+    //Rotates block in z-axis with specified angle
+    private IEnumerator Rotate(float rotationAngle)
+    {
+        if (!isRotating)
+        {
+            isRotating = true;
+
+            Vector3 targetRotation = transform.rotation * new Vector3(0, 0, Mathf.Round(transform.eulerAngles.z + rotationAngle));
+
+            Quaternion targetQuaternion = Quaternion.Euler(targetRotation);
+
+            //Percentage of rotation progress
+            float progress = 0f;
+
+            while (progress != 1)
+            {
+                progress += blockControllerData.blockTurningSpeed;
+
+                //Overflow protection
+                if (progress > 1)
+                    progress = 1;
+
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetQuaternion, progress);
+
+                yield return null;
+            }
+            isRotating = false;
+        }
     }
 }

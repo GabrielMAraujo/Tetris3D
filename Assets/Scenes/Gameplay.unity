@@ -605,6 +605,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   game: {fileID: 38980609}
   playerInput: {fileID: 1557456258}
+  blockControllerData: {fileID: 11400000, guid: 54e73a095f9e342e3aeae82078bc7c8d,
+    type: 2}
 --- !u!1001 &8151968224549416633
 PrefabInstance:
   m_ObjectHideFlags: 0
