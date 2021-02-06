@@ -52,8 +52,6 @@ public class BlockTile : MonoBehaviour
         {
             //Check if move is legal according to board matrix
             legalMove = !board.HasTile(possiblePosition);
-            if(rotation != 0)
-                print(possiblePosition);
         }
 
         return inBounds && legalMove;

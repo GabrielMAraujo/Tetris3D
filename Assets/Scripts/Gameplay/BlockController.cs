@@ -75,7 +75,7 @@ public class BlockController : MonoBehaviour
                         positions.Add(Vector2Int.RoundToInt(tile.transform.position));
 
                         //Re-parent block tiles to board
-                        tile.transform.SetParent(board.transform);
+                        tile.transform.SetParent(board.blocksContainer.transform);
 
                         //Destroy tile component to leave static tile only
                         Destroy(tile);
