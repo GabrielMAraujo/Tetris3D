@@ -8,4 +8,5 @@ public class BlockControllerData : ScriptableObject
 
     [Range(0f, 0.5f)]
     public float blockTurningSpeed;
+    public Vector2 blockStartingPosition;
 }

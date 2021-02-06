@@ -36,6 +36,8 @@ public class BlockController : MonoBehaviour
         currentBlock.transform.SetParent(transform);
 
         tiles = currentBlock.GetComponentsInChildren<BlockTile>().ToList();
+
+        transform.position = blockControllerData.blockStartingPosition;
     }
 
     private void OnDestroy()
@@ -80,6 +82,13 @@ public class BlockController : MonoBehaviour
                     //Destroy block parent game object and references
                     Destroy(currentBlock);
                     tiles = null;
+
+                    //Fetches block and triggers a new block generation from NextBlock
+                    GetNextBlock();
+                    nextBlock.GenerateNewBlock();
+
+                    //Resets position to the top
+                    transform.position = blockControllerData.blockStartingPosition;
                 }
             }
 
@@ -114,12 +123,7 @@ public class BlockController : MonoBehaviour
     private void OnSwitchDown()
     {
         GameObject aux = currentBlock;
-
-        currentBlock = nextBlock.block;
-        currentBlock.transform.position = transform.position;
-        currentBlock.transform.SetParent(transform);
-        tiles = currentBlock.GetComponentsInChildren<BlockTile>().ToList();
-
+        GetNextBlock();
         nextBlock.SwitchBlock(aux);
     }
 
@@ -181,5 +185,14 @@ public class BlockController : MonoBehaviour
         int rand = Random.Range(0, blockControllerData.blockPool.Count - 1);
 
         return blockControllerData.blockPool[rand];
+    }
+
+    //Get next block and place it into current block
+    private void GetNextBlock()
+    {
+        currentBlock = nextBlock.block;
+        currentBlock.transform.position = transform.position;
+        currentBlock.transform.SetParent(transform);
+        tiles = currentBlock.GetComponentsInChildren<BlockTile>().ToList();
     }
 }

@@ -11,6 +11,19 @@ public class NextBlock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GenerateNewBlock();
+    }
+
+    public void SwitchBlock(GameObject go)
+    {
+        block = go;
+        go.transform.position = transform.position;
+        go.transform.SetParent(transform);
+    }
+
+    //Generates a new block drafted from the block pool
+    public void GenerateNewBlock()
+    {
         block = Instantiate(GetRandomBlock(), transform.position, Quaternion.identity);
         block.transform.SetParent(transform);
     }
@@ -21,12 +34,5 @@ public class NextBlock : MonoBehaviour
         int rand = Random.Range(0, blockControllerData.blockPool.Count - 1);
 
         return blockControllerData.blockPool[rand];
-    }
-
-    public void SwitchBlock(GameObject go)
-    {
-        block = go;
-        go.transform.position = transform.position;
-        go.transform.SetParent(transform);
     }
 }
