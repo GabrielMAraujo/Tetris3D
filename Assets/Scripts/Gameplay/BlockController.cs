@@ -15,6 +15,7 @@ public class BlockController : MonoBehaviour
     public PlayerInput playerInput;
     public BlockControllerData blockControllerData;
     public Board board;
+    public NextBlock nextBlock;
 
     private List<BlockTile> tiles;
     private GameObject currentBlock;
@@ -26,11 +27,12 @@ public class BlockController : MonoBehaviour
         playerInput.OnHorizontalInputDown += OnHorizontalInputDown;
         playerInput.OnRotateLeftDown += OnRotateLeft;
         playerInput.OnRotateRightDown += OnRotateRight;
+        playerInput.OnSwitchDown += OnSwitchDown;
     }
 
     private void Start()
     {
-        currentBlock = Instantiate(GetRandomBlock(), transform.position, Quaternion.identity) as GameObject;
+        currentBlock = Instantiate(GetRandomBlock(), transform.position, Quaternion.identity);
         currentBlock.transform.SetParent(transform);
 
         tiles = currentBlock.GetComponentsInChildren<BlockTile>().ToList();
@@ -41,6 +43,7 @@ public class BlockController : MonoBehaviour
         playerInput.OnHorizontalInputDown -= OnHorizontalInputDown;
         playerInput.OnRotateLeftDown -= OnRotateLeft;
         playerInput.OnRotateRightDown -= OnRotateRight;
+        playerInput.OnSwitchDown -= OnSwitchDown;
     }
 
     void Update()
@@ -105,6 +108,19 @@ public class BlockController : MonoBehaviour
     {
         IEnumerator coroutine = Rotate(-90f);
         StartCoroutine(coroutine);
+    }
+
+    //Changes between current and next tile
+    private void OnSwitchDown()
+    {
+        GameObject aux = currentBlock;
+
+        currentBlock = nextBlock.block;
+        currentBlock.transform.position = transform.position;
+        currentBlock.transform.SetParent(transform);
+        tiles = currentBlock.GetComponentsInChildren<BlockTile>().ToList();
+
+        nextBlock.SwitchBlock(aux);
     }
 
     //Rotates block in z-axis with specified angle
