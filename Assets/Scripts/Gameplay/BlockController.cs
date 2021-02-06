@@ -21,6 +21,7 @@ public class BlockController : MonoBehaviour
     private GameObject currentBlock;
 
     private bool isRotating = false;
+    private bool allowRotation = true;
 
     void Awake()
     {
@@ -52,8 +53,11 @@ public class BlockController : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if(timer > game.currentPeriod)
+        if(!isRotating && timer > game.currentPeriod)
         {
+            //Block rotation to avoid bugs
+            allowRotation = false;
+
             //Try down movement. If it can't be done, settle block
             if (CanBlockMove(new Vector2Int(0, -1)))
             {
@@ -93,13 +97,14 @@ public class BlockController : MonoBehaviour
             }
 
             timer = 0;
+            allowRotation = true;
         }
     }
 
     //Move the block horizontally if possible
     private void OnHorizontalInputDown(int direction)
     {
-        if(CanBlockMove(new Vector2Int(direction, 0)))
+        if(!isRotating && CanBlockMove(new Vector2Int(direction, 0)))
         {
             transform.position += Vector3.right * direction;
         }
@@ -109,28 +114,66 @@ public class BlockController : MonoBehaviour
     //Rotate block on z-axis
     private void OnRotateLeft()
     {
-        IEnumerator coroutine = Rotate(90f);
-        StartCoroutine(coroutine);
+        //Check if rotation time is bigger than remaining time to go down. If it is, don't rotate
+        float remainingTime = game.currentPeriod - timer;
+        float rotationTime = (1f / blockControllerData.blockTurningSpeed) * Time.fixedDeltaTime;
+
+        bool enoughTime = remainingTime > rotationTime;
+
+        if (!isRotating && allowRotation && enoughTime)
+        {
+            int rotation = 90;
+
+            //Check if rotation is allowed
+            bool allowed = CanBlockMove(Vector2Int.zero, rotation);
+
+
+            if (allowed)
+            {
+                IEnumerator coroutine = Rotate(rotation);
+                StartCoroutine(coroutine);
+            }
+        }
     }
 
     private void OnRotateRight()
     {
-        IEnumerator coroutine = Rotate(-90f);
-        StartCoroutine(coroutine);
+        //Check if rotation time is bigger than remaining time to go down. If it is, don't rotate
+        float remainingTime = game.currentPeriod - timer;
+        float rotationTime = (1f / blockControllerData.blockTurningSpeed) * Time.fixedDeltaTime;
+
+        bool enoughTime = remainingTime > rotationTime;
+
+        if (!isRotating && allowRotation && enoughTime)
+        {
+            int rotation = -90;
+
+            //Check if rotation is allowed
+            bool allowed = CanBlockMove(Vector2Int.zero, rotation);
+
+            if (allowed)
+            {
+                IEnumerator coroutine = Rotate(rotation);
+                StartCoroutine(coroutine);
+            }
+        }
     }
 
     //Changes between current and next tile
     private void OnSwitchDown()
     {
-        GameObject aux = currentBlock;
-        GetNextBlock();
-        nextBlock.SwitchBlock(aux);
+        if (!isRotating)
+        {
+            GameObject aux = currentBlock;
+            GetNextBlock();
+            nextBlock.SwitchBlock(aux);
+        }
     }
 
     //Rotates block in z-axis with specified angle
     private IEnumerator Rotate(float rotationAngle)
     {
-        if (!isRotating)
+        if (!isRotating && allowRotation)
         {
             isRotating = true;
 
@@ -158,7 +201,7 @@ public class BlockController : MonoBehaviour
     }
 
     //Verify all block tiles movement possibility
-    private bool CanBlockMove(Vector2Int moveDirection)
+    private bool CanBlockMove(Vector2Int moveDirection, int rotation = 0)
     {
         bool successAll = false;
 
@@ -167,7 +210,7 @@ public class BlockController : MonoBehaviour
         {
             foreach (var tile in tiles)
             {
-                successAll = tile.CanMove(moveDirection, game.gameData.boardSize, board);
+                successAll = tile.CanMove(moveDirection, game.gameData.boardSize, board, isRotating, rotation, transform);
                 //If failed, interrupt loop
                 if (!successAll)
                 {

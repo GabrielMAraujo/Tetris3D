@@ -15,7 +15,8 @@ public class NextBlock : MonoBehaviour
     void Start()
     {
         //Instantiate empty container
-        blockContainer = Instantiate(new GameObject(), transform.position, Quaternion.identity);
+        blockContainer = new GameObject();
+        blockContainer.transform.position = transform.position;
         blockContainer.name = "Next Block Container";
         blockContainer.transform.SetParent(transform);
 
