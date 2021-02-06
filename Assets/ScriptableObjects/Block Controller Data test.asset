@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e60af2f7c0d948fd93b3b4fe9e70e9c, type: 3}
+  m_Name: Block Controller Data test
+  m_EditorClassIdentifier: 
+  blockPool:
+  - {fileID: 4335774460140985599, guid: e60a86e28766642159d0d8eae04b13bf, type: 3}
+  blockTurningSpeed: 0.188
+  blockStartingPosition: {x: 4, y: 17}
