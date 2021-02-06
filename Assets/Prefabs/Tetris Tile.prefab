@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 582677374747180373}
   - component: {fileID: 4591928247368381168}
   - component: {fileID: 1755622241903150650}
+  - component: {fileID: 5278775287786617073}
   m_Layer: 0
   m_Name: Tetris Tile
   m_TagString: Untagged
@@ -80,3 +81,15 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &5278775287786617073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242566905268152303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e6e8fbf08c374490b42959e0b0fb68b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BlockController : MonoBehaviour
@@ -10,6 +11,8 @@ public class BlockController : MonoBehaviour
     public PlayerInput playerInput;
     public BlockControllerData blockControllerData;
 
+    private List<BlockTile> tiles;
+
     private bool isRotating = false;
 
     void Awake()
@@ -17,6 +20,11 @@ public class BlockController : MonoBehaviour
         playerInput.OnHorizontalInputDown += OnHorizontalInputDown;
         playerInput.OnRotateLeftDown += OnRotateLeft;
         playerInput.OnRotateRightDown += OnRotateRight;
+    }
+
+    private void Start()
+    {
+       tiles = GetComponentsInChildren<BlockTile>().ToList();
     }
 
     private void OnDestroy()
@@ -45,7 +53,25 @@ public class BlockController : MonoBehaviour
     //Move the block horizontally if possible
     private void OnHorizontalInputDown(int direction)
     {
-        transform.position += Vector3.right * direction;
+        //Check if move will not be out of bounds in each block tile
+
+        bool successAll = false;
+
+        //All tiles have to be able to move in order to confirm movement
+        foreach(var tile in tiles)
+        {
+            successAll = tile.CanMove(new Vector2Int(direction, 0), game.gameData.boardSize);
+            //If failed, interrupt loop
+            if (!successAll)
+            {
+                break;
+            }
+        }
+
+        if (successAll)
+        {
+            transform.position += Vector3.right * direction;
+        }
     }
 
 
