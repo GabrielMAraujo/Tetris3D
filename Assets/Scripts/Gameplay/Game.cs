@@ -8,13 +8,13 @@ public class Game : MonoBehaviour
     public PlayerInput playerInput;
 
     //Period to trigger block descent
-
-    //Exposed to public
     [HideInInspector]
     public float currentPeriod = 0;
 
     //Period when not in speed mode
     private float normalPeriod = 0;
+    //Game level
+    private int level = 1;
 
     private void Awake()
     {
@@ -51,5 +51,16 @@ public class Game : MonoBehaviour
     private void OnSpeedInputUp()
     {
         currentPeriod = normalPeriod;
+    }
+
+    public int GetLevel()
+    {
+        return level;
+    }
+
+    public void LevelUp()
+    {
+        level++;
+        OnLevelUp();
     }
 }

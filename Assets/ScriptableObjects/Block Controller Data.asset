@@ -20,5 +20,5 @@ MonoBehaviour:
   - {fileID: 6605160914004103896, guid: f14529be2919948c48b9c7173d182238, type: 3}
   - {fileID: 8151968225532460732, guid: 56ceedbebf7f740d087823e8cfb69a84, type: 3}
   - {fileID: 8789558875228573066, guid: ebe1dd2fb8f1f46ebb1f02e76cf8a08d, type: 3}
-  blockTurningSpeed: 0.188
+  blockTurningSpeed: 0.2
   blockStartingPosition: {x: 4, y: 17}

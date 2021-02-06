@@ -7,6 +7,7 @@ public class Board : MonoBehaviour
 {
     public Game game;
     public BlockController blockController;
+    public Score score;
 
     //Game object which parents settled blocks
     [HideInInspector]
@@ -59,6 +60,9 @@ public class Board : MonoBehaviour
     //Checks if coordinate has a tile in board matrix
     public bool HasTile(Vector2Int position)
     {
+        if (position.x < 0 || position.y < 0)
+            return false;
+
         return boardMatrix[position.x, position.y] == 1;
     }
 
@@ -75,6 +79,7 @@ public class Board : MonoBehaviour
             {
                 RemoveRowFromMatrix(effectiveRow);
                 RemoveRowFromBoard(effectiveRow);
+                score.AddRowScore();
                 clearedRows++;
             }
         }
