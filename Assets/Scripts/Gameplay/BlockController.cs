@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public delegate void BlockTilesCallback(List<Vector2Int> positions);
+
 public class BlockController : MonoBehaviour
 {
+    public event BlockTilesCallback OnBlockSettle;
+
     //Timer to trigger block descent
     private float timer = 0;
     public Game game;
     public PlayerInput playerInput;
     public BlockControllerData blockControllerData;
+    public Board board;
 
     private List<BlockTile> tiles;
+    private GameObject currentBlock;
 
     private bool isRotating = false;
 
@@ -24,7 +30,10 @@ public class BlockController : MonoBehaviour
 
     private void Start()
     {
-       tiles = GetComponentsInChildren<BlockTile>().ToList();
+        currentBlock = Instantiate(GetRandomBlock(), transform.position, Quaternion.identity) as GameObject;
+        currentBlock.transform.SetParent(transform);
+
+        tiles = currentBlock.GetComponentsInChildren<BlockTile>().ToList();
     }
 
     private void OnDestroy()
@@ -40,10 +49,35 @@ public class BlockController : MonoBehaviour
 
         if(timer > game.currentPeriod)
         {
-            //Try block descent and reset time
-            if(transform.position.y > 0)
+            //Try down movement. If it can't be done, settle block
+            if (CanBlockMove(new Vector2Int(0, -1)))
             {
-                transform.position += Vector3.down;
+                transform.position += Vector3Int.down;
+            }
+            else
+            {
+                if (tiles != null)
+                {
+                    //Get tile positions
+                    List<Vector2Int> positions = new List<Vector2Int>();
+
+                    foreach (var tile in tiles)
+                    {
+                        positions.Add(Vector2Int.RoundToInt(tile.transform.position));
+
+                        //Re-parent block tiles to board
+                        tile.transform.SetParent(board.transform);
+
+                        //Destroy tile component to leave static tile only
+                        Destroy(tile);
+                    }
+
+                    OnBlockSettle.Invoke(positions);
+
+                    //Destroy block parent game object and references
+                    Destroy(currentBlock);
+                    tiles = null;
+                }
             }
 
             timer = 0;
@@ -53,22 +87,7 @@ public class BlockController : MonoBehaviour
     //Move the block horizontally if possible
     private void OnHorizontalInputDown(int direction)
     {
-        //Check if move will not be out of bounds in each block tile
-
-        bool successAll = false;
-
-        //All tiles have to be able to move in order to confirm movement
-        foreach(var tile in tiles)
-        {
-            successAll = tile.CanMove(new Vector2Int(direction, 0), game.gameData.boardSize);
-            //If failed, interrupt loop
-            if (!successAll)
-            {
-                break;
-            }
-        }
-
-        if (successAll)
+        if(CanBlockMove(new Vector2Int(direction, 0)))
         {
             transform.position += Vector3.right * direction;
         }
@@ -116,5 +135,35 @@ public class BlockController : MonoBehaviour
             }
             isRotating = false;
         }
+    }
+
+    //Verify all block tiles movement possibility
+    private bool CanBlockMove(Vector2Int moveDirection)
+    {
+        bool successAll = false;
+
+        //All tiles have to be able to move in order to confirm movement
+        if (tiles != null)
+        {
+            foreach (var tile in tiles)
+            {
+                successAll = tile.CanMove(moveDirection, game.gameData.boardSize);
+                //If failed, interrupt loop
+                if (!successAll)
+                {
+                    break;
+                }
+            }
+        }
+
+        return successAll;
+    }
+
+    //Get random block from block pool
+    private GameObject GetRandomBlock()
+    {
+        int rand = Random.Range(0, blockControllerData.blockPool.Count - 1);
+
+        return blockControllerData.blockPool[rand];
     }
 }
