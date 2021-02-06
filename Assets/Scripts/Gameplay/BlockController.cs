@@ -167,7 +167,7 @@ public class BlockController : MonoBehaviour
         {
             foreach (var tile in tiles)
             {
-                successAll = tile.CanMove(moveDirection, game.gameData.boardSize);
+                successAll = tile.CanMove(moveDirection, game.gameData.boardSize, board);
                 //If failed, interrupt loop
                 if (!successAll)
                 {

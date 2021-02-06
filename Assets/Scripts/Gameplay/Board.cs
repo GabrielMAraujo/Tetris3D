@@ -39,6 +39,12 @@ public class Board : MonoBehaviour
         PrintBoardMatrix();
     }
 
+    //Checks if coordinate has a tile in board matrix
+    public bool HasTile(Vector2Int position)
+    {
+        return boardMatrix[position.x, position.y] == 1;
+    }
+
     //DEBUG ONLY - prints board matrix in log
     private void PrintBoardMatrix()
     {
