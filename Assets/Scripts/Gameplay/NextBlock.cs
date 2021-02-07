@@ -5,6 +5,8 @@ using UnityEngine;
 public class NextBlock : MonoBehaviour
 {
     public BlockControllerData blockControllerData;
+    public GameObject panel;
+
     [HideInInspector]
     public GameObject block;
 
@@ -26,7 +28,8 @@ public class NextBlock : MonoBehaviour
     public void SwitchBlock(GameObject go)
     {
         block = go;
-        go.transform.position = transform.position;
+        //go.transform.position = transform.position;
+        go.transform.position = Camera.main.ScreenToWorldPoint(panel.transform.position);
         go.transform.SetParent(blockContainer.transform);
 
         //Ajust container according to block center
@@ -40,7 +43,11 @@ public class NextBlock : MonoBehaviour
     //Generates a new block drafted from the block pool
     public void GenerateNewBlock()
     {
-        block = Instantiate(GetRandomBlock(), transform.position, Quaternion.identity);
+        Vector3 panelCorrectedPos = Camera.main.ScreenToWorldPoint(panel.transform.position);
+        //panelCorrectedPos = new Vector3(panelCorrectedPos.x, panelCorrectedPos.y, 0);
+
+        block = Instantiate(GetRandomBlock(), panelCorrectedPos, Quaternion.identity);
+        //block = Instantiate(GetRandomBlock(), transform.position, Quaternion.identity);
         block.transform.SetParent(blockContainer.transform);
 
         //Ajust container according to block center

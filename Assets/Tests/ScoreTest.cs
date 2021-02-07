@@ -47,7 +47,7 @@ namespace Tests
 
             Assert.AreEqual(score.GetCurrentScore(), expectedScore);
 
-            Object.Destroy(score.gameObject);
+            Object.Destroy(scoreGO);
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Tests
 
             Assert.AreEqual(score.GetCurrentScore(), expectedScore);
 
-            Object.Destroy(score.gameObject);
+            Object.Destroy(scoreGO);
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace Tests
 
             Assert.AreEqual(score.GetCurrentScore(), expectedScore);
 
-            Object.Destroy(score.gameObject);
+            Object.Destroy(scoreGO);
         }
 
     }
