@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static FMODEvents;
 
 public delegate void BlockTilesCallback(List<Vector2Int> positions);
 
@@ -23,12 +24,16 @@ public class BlockController : MonoBehaviour
     private bool isRotating = false;
     private bool allowRotation = true;
 
+    protected SoundEventEmitter eventEmitter;
+
     void Awake()
     {
         playerInput.OnHorizontalInputDown += OnHorizontalInputDown;
         playerInput.OnRotateLeftDown += OnRotateLeft;
         playerInput.OnRotateRightDown += OnRotateRight;
         playerInput.OnSwitchDown += OnSwitchDown;
+
+        eventEmitter = SoundEventEmitter.instance;
     }
 
     private void Start()
@@ -130,6 +135,12 @@ public class BlockController : MonoBehaviour
 
             if (allowed)
             {
+                //Play rotation SFX
+                eventEmitter.SetFMODGlobalParameter(
+                    FMODEvents.GetString<GlobalParameters>(GlobalParameters.DIRECTION),
+                    -1);
+                eventEmitter.PlaySFXOneShot(FMODEvents.GetString<SFX>(SFX.ROTATION));
+
                 IEnumerator coroutine = Rotate(rotation);
                 StartCoroutine(coroutine);
             }
@@ -153,6 +164,12 @@ public class BlockController : MonoBehaviour
 
             if (allowed)
             {
+                //Play rotation SFX
+                eventEmitter.SetFMODGlobalParameter(
+                    FMODEvents.GetString<GlobalParameters>(GlobalParameters.DIRECTION),
+                    1);
+                eventEmitter.PlaySFXOneShot(FMODEvents.GetString<SFX>(SFX.ROTATION));
+
                 IEnumerator coroutine = Rotate(rotation);
                 StartCoroutine(coroutine);
             }
