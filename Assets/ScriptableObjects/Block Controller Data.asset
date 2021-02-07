@@ -22,3 +22,4 @@ MonoBehaviour:
   - {fileID: 8789558875228573066, guid: ebe1dd2fb8f1f46ebb1f02e76cf8a08d, type: 3}
   blockTurningSpeed: 0.2
   blockStartingPosition: {x: 4, y: 20}
+  nextBlockScale: {x: 0.35, y: 0.35, z: 0.35}

@@ -251,6 +251,7 @@ public class BlockController : MonoBehaviour
     private void GetNextBlock()
     {
         currentBlock = nextBlock.block;
+        currentBlock.transform.localScale = new Vector3(1, 1, 1);
         currentBlock.transform.position = transform.position;
         currentBlock.transform.SetParent(transform);
         tiles = currentBlock.GetComponentsInChildren<BlockTile>().ToList();

@@ -18,7 +18,8 @@ public class NextBlock : MonoBehaviour
     {
         //Instantiate empty container
         blockContainer = new GameObject();
-        blockContainer.transform.position = transform.position;
+        //Assining panel position to block
+        blockContainer.transform.position = panel.transform.position;
         blockContainer.name = "Next Block Container";
         blockContainer.transform.SetParent(transform);
 
@@ -28,34 +29,44 @@ public class NextBlock : MonoBehaviour
     public void SwitchBlock(GameObject go)
     {
         block = go;
-        //go.transform.position = transform.position;
-        go.transform.position = Camera.main.ScreenToWorldPoint(panel.transform.position);
+        go.transform.position = Vector3.zero;
         go.transform.SetParent(blockContainer.transform);
+        //Center object pivot in panel
+        block.transform.localPosition = Vector3.zero;
 
-        //Ajust container according to block center
-        var offset = FindBlockCenter(go);
+        //Lowering block scale to fit panel
+        //Scale is proportional to a constant, and also to the screen aspect ratio
+        Vector3 newScale = blockControllerData.nextBlockScale * (Mathf.Sqrt(Camera.main.aspect));
+        block.transform.localScale = newScale;
+
+        //Ajust container according to block center, accounting for the scale change
+        var offset = FindBlockCenter(block);
         if (offset != null)
         {
-            blockContainer.transform.position -= new Vector3(offset.Value.x, offset.Value.y);
+            block.transform.localPosition -= new Vector3(offset.Value.x * newScale.x, offset.Value.y * newScale.y);
         }
     }
 
     //Generates a new block drafted from the block pool
     public void GenerateNewBlock()
     {
-        Vector3 panelCorrectedPos = Camera.main.ScreenToWorldPoint(panel.transform.position);
-        //panelCorrectedPos = new Vector3(panelCorrectedPos.x, panelCorrectedPos.y, 0);
-
-        block = Instantiate(GetRandomBlock(), panelCorrectedPos, Quaternion.identity);
-        //block = Instantiate(GetRandomBlock(), transform.position, Quaternion.identity);
+        block = Instantiate(GetRandomBlock(), Vector3.zero, Quaternion.identity);
         block.transform.SetParent(blockContainer.transform);
+        //Center object pivot in panel
+        block.transform.localPosition = Vector3.zero;
 
-        //Ajust container according to block center
+        //Lowering block scale to fit panel
+        //Scale is proportional to a constant, and also to the screen aspect ratio
+        Vector3 newScale = blockControllerData.nextBlockScale * (Mathf.Sqrt(Camera.main.aspect));
+        block.transform.localScale = newScale;
+
+        //Ajust container according to block center, accounting for the scale change
         var offset = FindBlockCenter(block);
-        if(offset != null)
+        if (offset != null)
         {
-            blockContainer.transform.position -= new Vector3(offset.Value.x, offset.Value.y);
+            block.transform.localPosition -= new Vector3(offset.Value.x * newScale.x, offset.Value.y * newScale.y);
         }
+        
     }
 
     //Get random block from block pool
