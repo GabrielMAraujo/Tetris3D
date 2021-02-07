@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameData: {fileID: 11400000, guid: 3de7ca192945a492cbecf6de569c9f58, type: 2}
   playerInput: {fileID: 1557456258}
+  blockController: {fileID: 1771615894}
   currentPeriod: 0
 --- !u!114 &38980610
 MonoBehaviour:

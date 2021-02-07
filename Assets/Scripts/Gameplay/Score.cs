@@ -26,12 +26,25 @@ public class Score : MonoBehaviour
     void Start()
     {
         highScore = GetHighScore();
+        UpdateScoreText();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        blockController.OnBlockSettle -= OnBlockSettle;
+    }
+
+    #region Events
+    private void OnBlockSettle(List<Vector2Int> positions)
+    {
+        AddBlockScore(false);
+    }
+
+    #endregion
+
+    public int GetCurrentScore()
+    {
+        return currentScore;
     }
 
     public int GetHighScore()
@@ -42,11 +55,6 @@ public class Score : MonoBehaviour
     private void SetHighScore(int score)
     {
         PlayerPrefs.SetInt("HighScore", score);
-    }
-
-    private void OnBlockSettle(List<Vector2Int> positions)
-    {
-        AddBlockScore(false);
     }
 
     public void AddBlockScore(bool withSpeed)
@@ -62,7 +70,10 @@ public class Score : MonoBehaviour
 
         //Updates high score variable if needed
         if (currentScore > highScore)
+        {
             highScore = currentScore;
+            SetHighScore(highScore);
+        }
 
         UpdateScoreText();
     }
@@ -73,7 +84,10 @@ public class Score : MonoBehaviour
 
         //Updates high score variable if needed
         if (currentScore > highScore)
+        {
             highScore = currentScore;
+            SetHighScore(highScore);
+        }
 
         UpdateScoreText();
     }
@@ -82,6 +96,6 @@ public class Score : MonoBehaviour
     public void UpdateScoreText()
     {
         currentScoreText.text = currentScore.ToString("000000");
-        highScoreText.text = currentScore.ToString("000000");
+        highScoreText.text = highScore.ToString("000000");
     }
 }
