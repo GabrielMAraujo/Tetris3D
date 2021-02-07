@@ -447,7 +447,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -320, y: -180}
+  m_SizeDelta: {x: -200, y: -180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &581765400
 MonoBehaviour:
@@ -729,17 +729,17 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 24
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 32
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae
-    urna sed sem pulvinar condimentum dignissim id augue. Duis massa.
+    m_LineSpacing: 2
+  m_Text: "Move Left - A / Left Arrow \nMove Right - D / Right Arrow\nSpeed - Space
+    Bar / Down Arrow\nRotate Left - Q\nRotate Right - E\nSwitch Blocks - Tab"
 --- !u!222 &1894610442
 CanvasRenderer:
   m_ObjectHideFlags: 0
