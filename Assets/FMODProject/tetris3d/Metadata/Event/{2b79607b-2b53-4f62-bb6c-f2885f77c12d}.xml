@@ -5,7 +5,7 @@
 			<value>Gameplay</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5397e763-c11f-4f92-91f8-abdb4c79c7c9}</destination>
@@ -139,7 +139,6 @@
 	<object class="MixerBusEffectChain" id="{8f9d17ec-e907-429a-b96c-c9d9e134682c}">
 		<relationship name="effects">
 			<destination>{ba7e937b-2a55-488e-814a-7e56a1fad34b}</destination>
-			<destination>{a6863c71-8cc7-4494-aaae-d74a8ccd181c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{d3f29673-2f69-4631-a752-b595e5ca00ee}" />
@@ -151,10 +150,5 @@
 	</object>
 	<object class="MixerBusPanner" id="{d33cf3cb-84df-4d2d-8165-f68a86deba44}" />
 	<object class="MixerBusFader" id="{ba7e937b-2a55-488e-814a-7e56a1fad34b}" />
-	<object class="SpatialiserEffect" id="{a6863c71-8cc7-4494-aaae-d74a8ccd181c}">
-		<property name="distanceRolloffType">
-			<value>4</value>
-		</property>
-	</object>
 	<object class="MixerBusFader" id="{de3f6d8f-ccef-49e2-a789-56403e0e5414}" />
 </objects>

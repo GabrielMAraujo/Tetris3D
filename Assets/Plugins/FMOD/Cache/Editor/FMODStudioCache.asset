@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: Assets/FMODProject/tetris3d/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637482896030000000
+  lastModified: 637482923260000000
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -62,7 +62,7 @@ MonoBehaviour:
   - {fileID: -8009466395792659792}
   StringsBanks:
   - {fileID: 475326181948879740}
-  stringsBankWriteTime: 637482896030000000
+  stringsBankWriteTime: 637482923260000000
   cacheVersion: 6
 --- !u!114 &475326181948879740
 MonoBehaviour:
@@ -79,7 +79,7 @@ MonoBehaviour:
   Path: Assets/FMODProject/tetris3d/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637482896030000000
+  lastModified: 637482923260000000
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -102,11 +102,11 @@ MonoBehaviour:
   Banks:
   - {fileID: -8009466395792659792}
   IsStream: 1
-  Is3D: 1
+  Is3D: 0
   IsOneShot: 0
   Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
+  MinDistance: 0
+  MaxDistance: 0
   Length: 38577
 --- !u!114 &5280468062790161174
 MonoBehaviour:
@@ -125,9 +125,9 @@ MonoBehaviour:
   Banks:
   - {fileID: -8009466395792659792}
   IsStream: 0
-  Is3D: 1
+  Is3D: 0
   IsOneShot: 1
   Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
+  MinDistance: 0
+  MaxDistance: 0
   Length: 116

@@ -19,7 +19,10 @@ public class Score : MonoBehaviour
 
     private void Awake()
     {
-        blockController.OnBlockSettle += OnBlockSettle;
+        if (blockController != null)
+        {
+            blockController.OnBlockSettle += OnBlockSettle;
+        }
     }
 
     // Start is called before the first frame update

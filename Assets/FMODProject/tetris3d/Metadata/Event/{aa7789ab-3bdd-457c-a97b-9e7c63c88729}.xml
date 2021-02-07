@@ -5,7 +5,7 @@
 			<value>Rotation</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5397e763-c11f-4f92-91f8-abdb4c79c7c9}</destination>
@@ -151,7 +151,6 @@
 	<object class="MixerBusEffectChain" id="{cfeb386c-0dd1-4560-a4f7-50a62a29c02d}">
 		<relationship name="effects">
 			<destination>{2a8bb7c8-b8bb-4e5b-88ae-3196213d937c}</destination>
-			<destination>{e5dbf046-243e-400c-afc0-41261b1bf332}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{d9bf61c9-0f80-4316-bfdc-2f6114522571}" />
@@ -191,11 +190,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{376adbfd-3daf-4168-b247-0aca62ab0d3a}" />
 	<object class="MixerBusFader" id="{2a8bb7c8-b8bb-4e5b-88ae-3196213d937c}" />
-	<object class="SpatialiserEffect" id="{e5dbf046-243e-400c-afc0-41261b1bf332}">
-		<property name="distanceRolloffType">
-			<value>4</value>
-		</property>
-	</object>
 	<object class="MixerBusFader" id="{7992267a-6023-4e12-a04a-bda9a172b6a7}" />
 	<object class="MixerBusFader" id="{7817e41e-2d00-4917-8983-e0e7f6aa27d0}" />
 </objects>
