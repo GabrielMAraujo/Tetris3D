@@ -42,18 +42,9 @@ public class BlockTile : MonoBehaviour
             Destroy(parentGO);
         }
 
-        //Building Rect with board dimensions
-        Rect boardRect = new Rect(0, 0, boardSize.x, boardSize.y);
+        //Check if move is legal according to board matrix
+        bool legalMove = !board.HasTile(possiblePosition);
 
-        bool inBounds = boardRect.Contains(possiblePosition);
-
-        bool legalMove = false;
-        if (inBounds)
-        {
-            //Check if move is legal according to board matrix
-            legalMove = !board.HasTile(possiblePosition);
-        }
-
-        return inBounds && legalMove;
+        return legalMove;
     }
 }

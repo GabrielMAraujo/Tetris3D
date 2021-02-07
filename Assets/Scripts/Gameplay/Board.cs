@@ -60,10 +60,18 @@ public class Board : MonoBehaviour
     //Checks if coordinate has a tile in board matrix
     public bool HasTile(Vector2Int position)
     {
-        if (position.x < 0 || position.y < 0)
-            return false;
+        //Out of bounds check
+        Rect boardRect = new Rect(0, 0, game.gameData.boardSize.x, game.gameData.boardSize.y);
 
-        return boardMatrix[position.x, position.y] == 1;
+        bool outOfBounds = !boardRect.Contains(position);
+
+        if (!outOfBounds)
+        {
+            //If not out of bounds, check in board matrix
+            return boardMatrix[position.x, position.y] == 1;
+        }
+
+        return true;
     }
 
     private void CheckForClearedRows(List<int> possibleRows)

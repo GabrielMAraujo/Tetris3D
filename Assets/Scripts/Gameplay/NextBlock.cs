@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NextBlock : MonoBehaviour
@@ -29,7 +30,11 @@ public class NextBlock : MonoBehaviour
     public void SwitchBlock(GameObject go)
     {
         block = go;
+
+        //Reset position and rotation
         go.transform.position = Vector3.zero;
+        go.transform.rotation = Quaternion.identity;
+
         go.transform.SetParent(blockContainer.transform);
         //Center object pivot in panel
         block.transform.localPosition = Vector3.zero;
@@ -67,6 +72,27 @@ public class NextBlock : MonoBehaviour
             block.transform.localPosition -= new Vector3(offset.Value.x * newScale.x, offset.Value.y * newScale.y);
         }
         
+    }
+
+    //Returns a list of possible coordinates of the next block in the case of a switch
+    public List<Vector2Int> GetPossibleNextBlockCoordinates(Vector2Int currentPosition)
+    {
+        List<BlockTile> tiles = block.GetComponentsInChildren<BlockTile>().ToList();
+
+        List<Vector2Int> positions = new List<Vector2Int>();
+
+        foreach(var tile in tiles)
+        {
+            //Get block local coordinates
+            Vector2Int coord = Vector2Int.RoundToInt(tile.transform.localPosition);
+
+            //Add the current position offset to the value
+            coord += currentPosition;
+
+            positions.Add(coord);
+        }
+
+        return positions;
     }
 
     //Get random block from block pool

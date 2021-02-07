@@ -188,9 +188,28 @@ public class BlockController : MonoBehaviour
     {
         if (!isRotating)
         {
-            GameObject aux = currentBlock;
-            GetNextBlock();
-            nextBlock.SwitchBlock(aux);
+            //Check if switch won't cause out of bounds or collisions
+            List<Vector2Int> possiblePositions = nextBlock.GetPossibleNextBlockCoordinates(Vector2Int.RoundToInt(transform.position));
+
+            //For each coordinate, verify if it would have a block. If so, cancel switch
+            bool successAll = false;
+
+            foreach (var possiblePosition in possiblePositions)
+            {
+                successAll = !board.HasTile(possiblePosition);
+                //If failed, interrupt loop
+                if (!successAll)
+                {
+                    break;
+                }
+            }
+
+            if (successAll)
+            {
+                GameObject aux = currentBlock;
+                GetNextBlock();
+                nextBlock.SwitchBlock(aux);
+            }
         }
     }
 
