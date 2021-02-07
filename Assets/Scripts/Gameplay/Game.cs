@@ -116,4 +116,9 @@ public class Game : MonoBehaviour
         SceneManager.LoadSceneAsync("Game Over", LoadSceneMode.Additive);
     }
     #endregion
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Single);
+    }
 }
