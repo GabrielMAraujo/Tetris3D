@@ -68,6 +68,9 @@ public class Board : MonoBehaviour
 
     private void CheckForClearedRows(List<int> possibleRows)
     {
+        //Sort in ascending order, to conform with algorithm logic
+        possibleRows.Sort();
+
         //Accounts for cleared rows, to offset other row values accondingly
         int clearedRows = 0;
 
