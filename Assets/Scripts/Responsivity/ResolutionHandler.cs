@@ -10,20 +10,18 @@ public class ResolutionHandler : MonoBehaviour
 
     private Camera camera;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         camera = GetComponent<Camera>();
-
-        
+        ChangeCameraProperties();
     }
 
     private void Update()
     {
-        //Changes in realtime only in editor, for development purposes
-        #if UNITY_EDITOR
-                ChangeCameraProperties();
-        #endif
+        ////Changes in realtime only in editor, for development purposes
+        //#if UNITY_EDITOR
+        //        ChangeCameraProperties();
+        //#endif
     }
 
     private void ChangeCameraProperties()
