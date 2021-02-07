@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{0b2a2ce3-ef6e-4efa-9b58-e7c096057ff2}">
+		<property name="assetPath">
+			<value>Original Tetris theme (Tetris Soundtrack)_160k.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>83.664000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6efeb5b0-2551-451d-b11f-1b66b38358c3}</destination>
+		</relationship>
+	</object>
+</objects>
