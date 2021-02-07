@@ -57,7 +57,7 @@ public class Game : MonoBehaviour
         currentPeriod = normalPeriod;
     }
 
-    private void OnBlockSettle(List<Vector2Int> positions)
+    private void OnBlockSettle(List<Vector2Int> positions, bool speed)
     {
         bool gameOver = false;
         foreach(var position in positions)

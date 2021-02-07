@@ -35,7 +35,7 @@ public class Board : MonoBehaviour
     }
 
     //Store block tiles in boolean matrix
-    private void OnBlockSettle(List<Vector2Int> positions)
+    private void OnBlockSettle(List<Vector2Int> positions, bool speed)
     {
         List<int> possibleRows = new List<int>();
 

@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using static FMODEvents;
 
-public delegate void BlockTilesCallback(List<Vector2Int> positions);
+public delegate void BlockTilesCallback(List<Vector2Int> positions, bool speed);
 
 public class BlockController : MonoBehaviour
 {
@@ -24,6 +24,8 @@ public class BlockController : MonoBehaviour
     private bool isRotating = false;
     private bool allowRotation = true;
 
+    private bool hasSpeed = false;
+
     protected SoundEventEmitter eventEmitter;
 
     void Awake()
@@ -32,6 +34,7 @@ public class BlockController : MonoBehaviour
         playerInput.OnRotateLeftDown += OnRotateLeft;
         playerInput.OnRotateRightDown += OnRotateRight;
         playerInput.OnSwitchDown += OnSwitchDown;
+        playerInput.OnSpeedDown += OnSpeedDown;
 
         eventEmitter = SoundEventEmitter.instance;
     }
@@ -86,7 +89,9 @@ public class BlockController : MonoBehaviour
                         Destroy(tile);
                     }
 
-                    OnBlockSettle.Invoke(positions);
+                    OnBlockSettle.Invoke(positions, hasSpeed);
+                    //Reset speed flag after triggering event
+                    hasSpeed = false;
 
                     //Destroy block parent game object and references
                     Destroy(currentBlock);
@@ -106,6 +111,8 @@ public class BlockController : MonoBehaviour
         }
     }
 
+
+    #region Events
     //Move the block horizontally if possible
     private void OnHorizontalInputDown(int direction)
     {
@@ -186,6 +193,13 @@ public class BlockController : MonoBehaviour
             nextBlock.SwitchBlock(aux);
         }
     }
+
+    private void OnSpeedDown()
+    {
+        hasSpeed = true;
+    }
+    #endregion
+
 
     //Rotates block in z-axis with specified angle
     private IEnumerator Rotate(float rotationAngle)

@@ -38,9 +38,9 @@ public class Score : MonoBehaviour
     }
 
     #region Events
-    private void OnBlockSettle(List<Vector2Int> positions)
+    private void OnBlockSettle(List<Vector2Int> positions, bool speed)
     {
-        AddBlockScore(false);
+        AddBlockScore(speed);
     }
 
     #endregion
