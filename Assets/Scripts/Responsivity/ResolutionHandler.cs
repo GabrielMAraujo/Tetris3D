@@ -8,11 +8,11 @@ public class ResolutionHandler : MonoBehaviour
 {
     public CameraData cameraData;
 
-    private Camera camera;
+    private Camera cameraRef;
 
     private void Awake()
     {
-        camera = GetComponent<Camera>();
+        cameraRef = GetComponent<Camera>();
         ChangeCameraProperties();
     }
 
@@ -33,36 +33,30 @@ public class ResolutionHandler : MonoBehaviour
 
         if (isLandscape)
         {
-            //camera.rect = cameraData.landscapeViewportRect;
             //4:3
-            if (camera.aspect <= 1.4f)
+            if (cameraRef.aspect <= 1.4f)
             {
-                //camera.rect = cameraData.AspectRatio3_4ViewportRect;
-                camera.transform.position = cameraData.AspectRatio4_3CameraPosition;
+                cameraRef.transform.position = cameraData.AspectRatio4_3CameraPosition;
             }
             //16:9
             else
             {
-                camera.transform.position = cameraData.AspectRatio16_9CameraPosition;
+                cameraRef.transform.position = cameraData.AspectRatio16_9CameraPosition;
             }
 
         }
         else
         {
-            //Check for specific portrait aspect ratios, intervals included for uncommon aspect ratios
-
             //3:4
-            if (camera.aspect >= 0.7f)
+            if (cameraRef.aspect >= 0.7f)
             {
-                //camera.rect = cameraData.AspectRatio3_4ViewportRect;
-                camera.transform.position = cameraData.AspectRatio3_4CameraPosition;
+                cameraRef.transform.position = cameraData.AspectRatio3_4CameraPosition;
             }
 
             //9:16 and thinner aspect ratios
             else
             {
-                //camera.rect = cameraData.AspectRatio9_16ViewportRect;
-                camera.transform.position = cameraData.AspectRatio9_16CameraPosition;
+                cameraRef.transform.position = cameraData.AspectRatio9_16CameraPosition;
             }
         }
     }
@@ -71,7 +65,7 @@ public class ResolutionHandler : MonoBehaviour
     private bool FindScreenOrientation()
     {
         //Consider square resolutions as landscape for game configs
-        if(camera.aspect >= 1)
+        if(cameraRef.aspect >= 1)
         {
             return true;
         }

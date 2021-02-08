@@ -7,7 +7,7 @@ public delegate void GameCallback();
 
 public class Game : MonoBehaviour
 {
-    public event GameCallback OnGameOver;
+    //public event GameCallback OnGameOver;
 
     public GameData gameData;
     public PlayerInput playerInput;

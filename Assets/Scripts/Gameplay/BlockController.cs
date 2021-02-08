@@ -10,8 +10,6 @@ public class BlockController : MonoBehaviour
 {
     public event BlockTilesCallback OnBlockSettle;
 
-    //Timer to trigger block descent
-    private float timer = 0;
     public Game game;
     public PlayerInput playerInput;
     public BlockControllerData blockControllerData;
@@ -20,10 +18,10 @@ public class BlockController : MonoBehaviour
 
     private List<BlockTile> tiles;
     private GameObject currentBlock;
-
+    //Timer to trigger block descent
+    private float timer = 0;
     private bool isRotating = false;
     private bool allowRotation = true;
-
     private bool hasSpeed = false;
 
     protected SoundEventEmitter eventEmitter;
@@ -73,37 +71,14 @@ public class BlockController : MonoBehaviour
             }
             else
             {
-                if (tiles != null)
-                {
-                    //Get tile positions
-                    List<Vector2Int> positions = new List<Vector2Int>();
+                SettleCurrentBlock();
 
-                    foreach (var tile in tiles)
-                    {
-                        positions.Add(Vector2Int.RoundToInt(tile.transform.position));
+                //Fetches next block and triggers a new block generation from NextBlock
+                GetNextBlock();
+                nextBlock.GenerateNewBlock();
 
-                        //Re-parent block tiles to board
-                        tile.transform.SetParent(board.blocksContainer.transform);
-
-                        //Destroy tile component to leave static tile only
-                        Destroy(tile);
-                    }
-
-                    OnBlockSettle.Invoke(positions, hasSpeed);
-                    //Reset speed flag after triggering event
-                    hasSpeed = false;
-
-                    //Destroy block parent game object and references
-                    Destroy(currentBlock);
-                    tiles = null;
-
-                    //Fetches block and triggers a new block generation from NextBlock
-                    GetNextBlock();
-                    nextBlock.GenerateNewBlock();
-
-                    //Resets position to the top
-                    transform.position = blockControllerData.blockStartingPosition;
-                }
+                //Resets position to the top
+                transform.position = blockControllerData.blockStartingPosition;
             }
 
             timer = 0;
@@ -126,61 +101,12 @@ public class BlockController : MonoBehaviour
     //Rotate block on z-axis
     private void OnRotateLeft()
     {
-        //Check if rotation time is bigger than remaining time to go down. If it is, don't rotate
-        float remainingTime = game.currentPeriod - timer;
-        float rotationTime = (1f / blockControllerData.blockTurningSpeed) * Time.fixedDeltaTime;
-
-        bool enoughTime = remainingTime > rotationTime;
-
-        if (!isRotating && allowRotation && enoughTime)
-        {
-            int rotation = 90;
-
-            //Check if rotation is allowed
-            bool allowed = CanBlockMove(Vector2Int.zero, rotation);
-
-
-            if (allowed)
-            {
-                //Play rotation SFX
-                eventEmitter.SetFMODGlobalParameter(
-                    FMODEvents.GetString<GlobalParameters>(GlobalParameters.DIRECTION),
-                    -1);
-                eventEmitter.PlaySFXOneShot(FMODEvents.GetString<SFX>(SFX.ROTATION));
-
-                IEnumerator coroutine = Rotate(rotation);
-                StartCoroutine(coroutine);
-            }
-        }
+        CheckAndStartRotation(-1);
     }
 
     private void OnRotateRight()
     {
-        //Check if rotation time is bigger than remaining time to go down. If it is, don't rotate
-        float remainingTime = game.currentPeriod - timer;
-        float rotationTime = (1f / blockControllerData.blockTurningSpeed) * Time.fixedDeltaTime;
-
-        bool enoughTime = remainingTime > rotationTime;
-
-        if (!isRotating && allowRotation && enoughTime)
-        {
-            int rotation = -90;
-
-            //Check if rotation is allowed
-            bool allowed = CanBlockMove(Vector2Int.zero, rotation);
-
-            if (allowed)
-            {
-                //Play rotation SFX
-                eventEmitter.SetFMODGlobalParameter(
-                    FMODEvents.GetString<GlobalParameters>(GlobalParameters.DIRECTION),
-                    1);
-                eventEmitter.PlaySFXOneShot(FMODEvents.GetString<SFX>(SFX.ROTATION));
-
-                IEnumerator coroutine = Rotate(rotation);
-                StartCoroutine(coroutine);
-            }
-        }
+        CheckAndStartRotation(1);
     }
 
     //Changes between current and next tile
@@ -218,6 +144,36 @@ public class BlockController : MonoBehaviour
         hasSpeed = true;
     }
     #endregion
+
+    private void CheckAndStartRotation(int direction)
+    {
+        //Check if rotation time is bigger than remaining time to go down. If it is, don't rotate
+        float remainingTime = game.currentPeriod - timer;
+        float rotationTime = (1f / blockControllerData.blockTurningSpeed) * Time.fixedDeltaTime;
+
+        bool enoughTime = remainingTime > rotationTime;
+
+        if (!isRotating && allowRotation && enoughTime)
+        {
+            int rotation = -90 * direction;
+
+            //Check if rotation is allowed
+            bool allowed = CanBlockMove(Vector2Int.zero, rotation);
+
+
+            if (allowed)
+            {
+                //Play rotation SFX
+                eventEmitter.SetFMODGlobalParameter(
+                    FMODEvents.GetString<GlobalParameters>(GlobalParameters.DIRECTION),
+                    direction);
+                eventEmitter.PlaySFXOneShot(FMODEvents.GetString<SFX>(SFX.ROTATION));
+
+                IEnumerator coroutine = Rotate(rotation);
+                StartCoroutine(coroutine);
+            }
+        }
+    }
 
 
     //Rotates block in z-axis with specified angle
@@ -290,5 +246,35 @@ public class BlockController : MonoBehaviour
         currentBlock.transform.position = transform.position;
         currentBlock.transform.SetParent(transform);
         tiles = currentBlock.GetComponentsInChildren<BlockTile>().ToList();
+    }
+
+
+    //Removes playable components from current blocks
+    private void SettleCurrentBlock()
+    {
+        if (tiles != null)
+        {
+            //Get tile positions
+            List<Vector2Int> positions = new List<Vector2Int>();
+
+            foreach (var tile in tiles)
+            {
+                positions.Add(Vector2Int.RoundToInt(tile.transform.position));
+
+                //Re-parent block tiles to board
+                tile.transform.SetParent(board.blocksContainer.transform);
+
+                //Destroy tile component to leave static tile only
+                Destroy(tile);
+            }
+
+            OnBlockSettle.Invoke(positions, hasSpeed);
+            //Reset speed flag after triggering event
+            hasSpeed = false;
+
+            //Destroy block parent game object and references
+            Destroy(currentBlock);
+            tiles = null;
+        }
     }
 }

@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class Score : MonoBehaviour
 {
     public ScoreData scoreData;
-    public Game game;
     public BlockController blockController;
 
     public Text currentScoreText;
     public Text highScoreText;
+
+    [HideInInspector]
+    public Game game;
 
     [HideInInspector]
     public int currentScore = 0;
@@ -19,6 +21,8 @@ public class Score : MonoBehaviour
 
     private void Awake()
     {
+        game = GetComponent<Game>();
+
         if (blockController != null)
         {
             blockController.OnBlockSettle += OnBlockSettle;
