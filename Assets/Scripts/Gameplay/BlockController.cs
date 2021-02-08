@@ -226,6 +226,7 @@ public class BlockController : MonoBehaviour
         if (!isRotating && allowRotation)
         {
             isRotating = true;
+            allowRotation = false;
 
             Vector3 targetRotation = transform.rotation * new Vector3(0, 0, Mathf.Round(transform.eulerAngles.z + rotationAngle));
 
@@ -247,6 +248,7 @@ public class BlockController : MonoBehaviour
                 yield return null;
             }
             isRotating = false;
+            allowRotation = true;
         }
     }
 

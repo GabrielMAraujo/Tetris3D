@@ -54,7 +54,7 @@ public class Board : MonoBehaviour
 
         CheckForClearedRows(possibleRows);
 
-        PrintBoardMatrix();
+        //PrintBoardMatrix();
     }
 
     //Checks if coordinate has a tile in board matrix

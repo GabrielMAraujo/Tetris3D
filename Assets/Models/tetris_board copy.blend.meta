@@ -1,24 +1,9 @@
 fileFormatVersion: 2
-guid: a0391dd3089844fc88f35feb9dfbe8da
+guid: f7a73b2d973fd430ba83a5f8714292e2
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Background
-    second: {fileID: 2100000, guid: 6050fddf7fa1f462d9c86724507ad638, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Border
-    second: {fileID: 2100000, guid: 7ef10e802f8cf4312b1491ffedcec0e7, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Color
-    second: {fileID: 2100000, guid: f6eab303eeb22430b85e5ae172d77036, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
