@@ -10,12 +10,13 @@ public class Game : MonoBehaviour
     //public event GameCallback OnGameOver;
 
     public GameData gameData;
-    public PlayerInput playerInput;
     public BlockController blockController;
 
     //Period to trigger block descent
     [HideInInspector]
     public float currentPeriod = 0;
+
+    private PlayerInput playerInput;
 
     //Period when not in speed mode
     private float normalPeriod = 0;
@@ -24,15 +25,18 @@ public class Game : MonoBehaviour
 
     private void Awake()
     {
-        playerInput.OnSpeedDown += OnSpeedDown;
-        playerInput.OnSpeedUp += OnSpeedUp;
-        blockController.OnBlockSettle += OnBlockSettle;
         Time.timeScale = 1;
     }
 
 
     void Start()
     {
+        playerInput = PlayerInput.instance;
+
+        playerInput.OnSpeedDown += OnSpeedDown;
+        playerInput.OnSpeedUp += OnSpeedUp;
+        blockController.OnBlockSettle += OnBlockSettle;
+
         normalPeriod = gameData.startingPeriod;
         currentPeriod = normalPeriod;
     }

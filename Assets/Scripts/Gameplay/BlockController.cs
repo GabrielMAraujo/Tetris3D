@@ -11,11 +11,11 @@ public class BlockController : MonoBehaviour
     public event BlockTilesCallback OnBlockSettle;
 
     public Game game;
-    public PlayerInput playerInput;
     public BlockControllerData blockControllerData;
     public Board board;
     public NextBlock nextBlock;
 
+    private PlayerInput playerInput;
     private List<BlockTile> tiles;
     private GameObject currentBlock;
     //Timer to trigger block descent
@@ -28,13 +28,15 @@ public class BlockController : MonoBehaviour
 
     void Awake()
     {
+        eventEmitter = SoundEventEmitter.instance;
+
+        playerInput = PlayerInput.instance;
+
         playerInput.OnHorizontalInputDown += OnHorizontalInputDown;
         playerInput.OnRotateLeftDown += OnRotateLeft;
         playerInput.OnRotateRightDown += OnRotateRight;
         playerInput.OnSwitchDown += OnSwitchDown;
         playerInput.OnSpeedDown += OnSpeedDown;
-
-        eventEmitter = SoundEventEmitter.instance;
     }
 
     private void Start()
