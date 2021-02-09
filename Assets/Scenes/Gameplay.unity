@@ -1164,7 +1164,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 38980609}
-  playerInput: {fileID: 1557456258}
   blockControllerData: {fileID: 11400000, guid: 54e73a095f9e342e3aeae82078bc7c8d,
     type: 2}
   board: {fileID: 1700410559}

@@ -15,12 +15,18 @@ public class BlockController : MonoBehaviour
     public Board board;
     public NextBlock nextBlock;
 
+    [HideInInspector]
+    public List<BlockTile> tiles;
+
     private PlayerInput playerInput;
-    private List<BlockTile> tiles;
     private GameObject currentBlock;
+
+    private BlockHorizontalController horizontalController;
+
     //Timer to trigger block descent
     private float timer = 0;
-    private bool isRotating = false;
+    [HideInInspector]
+    public bool isRotating = false;
     private bool allowRotation = true;
     private bool hasSpeed = false;
 
@@ -28,11 +34,13 @@ public class BlockController : MonoBehaviour
 
     void Awake()
     {
+        //Generate individual behaviour scripts in the same GameObject
+        horizontalController = gameObject.AddComponent<BlockHorizontalController>();
+
         eventEmitter = SoundEventEmitter.instance;
 
         playerInput = PlayerInput.instance;
 
-        playerInput.OnHorizontalInputDown += OnHorizontalInputDown;
         playerInput.OnRotateLeftDown += OnRotateLeft;
         playerInput.OnRotateRightDown += OnRotateRight;
         playerInput.OnSwitchDown += OnSwitchDown;
@@ -51,7 +59,6 @@ public class BlockController : MonoBehaviour
 
     private void OnDestroy()
     {
-        playerInput.OnHorizontalInputDown -= OnHorizontalInputDown;
         playerInput.OnRotateLeftDown -= OnRotateLeft;
         playerInput.OnRotateRightDown -= OnRotateRight;
         playerInput.OnSwitchDown -= OnSwitchDown;
@@ -90,15 +97,6 @@ public class BlockController : MonoBehaviour
 
 
     #region Events
-    //Move the block horizontally if possible
-    private void OnHorizontalInputDown(int direction)
-    {
-        if(!isRotating && CanBlockMove(new Vector2Int(direction, 0)))
-        {
-            transform.position += Vector3.right * direction;
-        }
-    }
-
 
     //Rotate block on z-axis
     private void OnRotateLeft()
