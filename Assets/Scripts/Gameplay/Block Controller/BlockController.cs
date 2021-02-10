@@ -16,22 +16,23 @@ public class BlockController : MonoBehaviour
 
     [HideInInspector]
     public List<BlockTile> tiles;
+    [HideInInspector]
+    public GameObject currentBlock;
 
     private PlayerInput playerInput;
-    private GameObject currentBlock;
-
     private BlockHorizontalController horizontalController;
     private BlockVerticalController verticalController;
     private BlockRotationController rotationController;
+    private BlockSwitchController switchController;
 
     //Timer to trigger block descent
     [HideInInspector]
     public float verticalTimer = 0;
-
     [HideInInspector]
     public bool isRotating = false;
     [HideInInspector]
     public bool allowRotation = true;
+
     private bool hasSpeed = false;
 
     void Awake()
@@ -40,10 +41,10 @@ public class BlockController : MonoBehaviour
         horizontalController = gameObject.AddComponent<BlockHorizontalController>();
         verticalController = gameObject.AddComponent<BlockVerticalController>();
         rotationController = gameObject.AddComponent<BlockRotationController>();
+        switchController = gameObject.AddComponent<BlockSwitchController>();
 
         playerInput = PlayerInput.instance;
 
-        playerInput.OnSwitchDown += OnSwitchDown;
         playerInput.OnSpeedDown += OnSpeedDown;
     }
 
@@ -59,7 +60,6 @@ public class BlockController : MonoBehaviour
 
     private void OnDestroy()
     {
-        playerInput.OnSwitchDown -= OnSwitchDown;
         playerInput.OnSpeedDown -= OnSpeedDown;
     }
 
@@ -70,36 +70,6 @@ public class BlockController : MonoBehaviour
 
 
     #region Events
-
-    //Changes between current and next tile
-    private void OnSwitchDown()
-    {
-        if (!isRotating)
-        {
-            //Check if switch won't cause out of bounds or collisions
-            List<Vector2Int> possiblePositions = nextBlock.GetPossibleNextBlockCoordinates(Vector2Int.RoundToInt(transform.position));
-
-            //For each coordinate, verify if it would have a block. If so, cancel switch
-            bool successAll = false;
-
-            foreach (var possiblePosition in possiblePositions)
-            {
-                successAll = !board.HasTile(possiblePosition);
-                //If failed, interrupt loop
-                if (!successAll)
-                {
-                    break;
-                }
-            }
-
-            if (successAll)
-            {
-                GameObject aux = currentBlock;
-                GetNextBlock();
-                nextBlock.SwitchBlock(aux);
-            }
-        }
-    }
 
     private void OnSpeedDown()
     {

@@ -36,7 +36,6 @@ public class BlockTile : MonoBehaviour
             parentGO.transform.Rotate(new Vector3(0, 0, rotation));
 
             possiblePosition = Vector2Int.RoundToInt(projectedGO.transform.position);
-            print(possiblePosition);
 
             //Destroy auxilliary game objects
             Destroy(projectedGO);
