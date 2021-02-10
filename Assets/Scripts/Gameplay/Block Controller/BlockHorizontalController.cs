@@ -13,18 +13,18 @@ public class BlockHorizontalController : BlockBaseController
     public override void Start()
     {
         base.Start();
+        playerInput.OnHorizontalInputDown += OnHorizontalInputDown;
     }
 
     public override void OnDestroy()
     {
         base.OnDestroy();
+        playerInput.OnHorizontalInputDown -= OnHorizontalInputDown;
     }
 
     //Move the block horizontally if possible
-    public override void OnHorizontalInputDown(int direction)
+    private void OnHorizontalInputDown(int direction)
     {
-        base.OnHorizontalInputDown(direction);
-
         if (!blockController.isRotating && CanBlockMove(new Vector2Int(direction, 0)))
         {
             transform.position += Vector3.right * direction;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static FMODEvents;
 
 public delegate void BlockTilesCallback(List<Vector2Int> positions, bool speed);
 
@@ -22,27 +21,28 @@ public class BlockController : MonoBehaviour
     private GameObject currentBlock;
 
     private BlockHorizontalController horizontalController;
+    private BlockVerticalController verticalController;
+    private BlockRotationController rotationController;
 
     //Timer to trigger block descent
-    private float timer = 0;
+    [HideInInspector]
+    public float verticalTimer = 0;
+
     [HideInInspector]
     public bool isRotating = false;
-    private bool allowRotation = true;
+    [HideInInspector]
+    public bool allowRotation = true;
     private bool hasSpeed = false;
-
-    protected SoundEventEmitter eventEmitter;
 
     void Awake()
     {
         //Generate individual behaviour scripts in the same GameObject
         horizontalController = gameObject.AddComponent<BlockHorizontalController>();
-
-        eventEmitter = SoundEventEmitter.instance;
+        verticalController = gameObject.AddComponent<BlockVerticalController>();
+        rotationController = gameObject.AddComponent<BlockRotationController>();
 
         playerInput = PlayerInput.instance;
 
-        playerInput.OnRotateLeftDown += OnRotateLeft;
-        playerInput.OnRotateRightDown += OnRotateRight;
         playerInput.OnSwitchDown += OnSwitchDown;
         playerInput.OnSpeedDown += OnSpeedDown;
     }
@@ -59,55 +59,17 @@ public class BlockController : MonoBehaviour
 
     private void OnDestroy()
     {
-        playerInput.OnRotateLeftDown -= OnRotateLeft;
-        playerInput.OnRotateRightDown -= OnRotateRight;
         playerInput.OnSwitchDown -= OnSwitchDown;
+        playerInput.OnSpeedDown -= OnSpeedDown;
     }
 
     void Update()
     {
-        timer += Time.deltaTime;
-
-        if(!isRotating && timer > game.currentPeriod)
-        {
-            //Block rotation to avoid bugs
-            allowRotation = false;
-
-            //Try down movement. If it can't be done, settle block
-            if (CanBlockMove(new Vector2Int(0, -1)))
-            {
-                transform.position += Vector3Int.down;
-            }
-            else
-            {
-                SettleCurrentBlock();
-
-                //Fetches next block and triggers a new block generation from NextBlock
-                GetNextBlock();
-                nextBlock.GenerateNewBlock();
-
-                //Resets position to the top
-                transform.position = blockControllerData.blockStartingPosition;
-            }
-
-            timer = 0;
-            allowRotation = true;
-        }
+        verticalController.UpdateVertical();
     }
 
 
     #region Events
-
-    //Rotate block on z-axis
-    private void OnRotateLeft()
-    {
-        CheckAndStartRotation(-1);
-    }
-
-    private void OnRotateRight()
-    {
-        CheckAndStartRotation(1);
-    }
 
     //Changes between current and next tile
     private void OnSwitchDown()
@@ -145,91 +107,6 @@ public class BlockController : MonoBehaviour
     }
     #endregion
 
-    private void CheckAndStartRotation(int direction)
-    {
-        //Check if rotation time is bigger than remaining time to go down. If it is, don't rotate
-        float remainingTime = game.currentPeriod - timer;
-        float rotationTime = (1f / blockControllerData.blockTurningSpeed) * Time.fixedDeltaTime;
-
-        bool enoughTime = remainingTime > rotationTime;
-
-        if (!isRotating && allowRotation && enoughTime)
-        {
-            int rotation = -90 * direction;
-
-            //Check if rotation is allowed
-            bool allowed = CanBlockMove(Vector2Int.zero, rotation);
-
-
-            if (allowed)
-            {
-                //Play rotation SFX
-                eventEmitter.SetFMODGlobalParameter(
-                    FMODEvents.GetString<GlobalParameters>(GlobalParameters.DIRECTION),
-                    direction);
-                eventEmitter.PlaySFXOneShot(FMODEvents.GetString<SFX>(SFX.ROTATION));
-
-                IEnumerator coroutine = Rotate(rotation);
-                StartCoroutine(coroutine);
-            }
-        }
-    }
-
-
-    //Rotates block in z-axis with specified angle
-    private IEnumerator Rotate(float rotationAngle)
-    {
-        if (!isRotating && allowRotation)
-        {
-            isRotating = true;
-            allowRotation = false;
-
-            Vector3 targetRotation = transform.rotation * new Vector3(0, 0, Mathf.Round(transform.eulerAngles.z + rotationAngle));
-
-            Quaternion targetQuaternion = Quaternion.Euler(targetRotation);
-
-            //Percentage of rotation progress
-            float progress = 0f;
-
-            while (progress != 1)
-            {
-                progress += blockControllerData.blockTurningSpeed;
-
-                //Overflow protection
-                if (progress > 1)
-                    progress = 1;
-
-                transform.rotation = Quaternion.Lerp(transform.rotation, targetQuaternion, progress);
-
-                yield return null;
-            }
-            isRotating = false;
-            allowRotation = true;
-        }
-    }
-
-    //Verify all block tiles movement possibility
-    private bool CanBlockMove(Vector2Int moveDirection, int rotation = 0)
-    {
-        bool successAll = false;
-
-        //All tiles have to be able to move in order to confirm movement
-        if (tiles != null)
-        {
-            foreach (var tile in tiles)
-            {
-                successAll = tile.CanMove(moveDirection, game.gameData.boardSize, board, isRotating, rotation, transform);
-                //If failed, interrupt loop
-                if (!successAll)
-                {
-                    break;
-                }
-            }
-        }
-
-        return successAll;
-    }
-
     //Get random block from block pool
     private GameObject GetRandomBlock()
     {
@@ -239,13 +116,29 @@ public class BlockController : MonoBehaviour
     }
 
     //Get next block and place it into current block
-    private void GetNextBlock()
+    public void GetNextBlock()
     {
+        //Reset rotation of this component
+        transform.rotation = Quaternion.identity;
+
         currentBlock = nextBlock.block;
         currentBlock.transform.localScale = new Vector3(1, 1, 1);
         currentBlock.transform.position = transform.position;
         currentBlock.transform.SetParent(transform);
         tiles = currentBlock.GetComponentsInChildren<BlockTile>().ToList();
+    }
+
+    //Settle block complete routine
+    public void SettleBlockRoutine()
+    {
+        SettleCurrentBlock();
+
+        //Fetches next block and triggers a new block generation from NextBlock
+        GetNextBlock();
+        nextBlock.GenerateNewBlock();
+
+        //Resets position to the top
+        transform.position = blockControllerData.blockStartingPosition;
     }
 
 

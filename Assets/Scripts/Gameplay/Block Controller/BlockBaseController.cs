@@ -6,6 +6,7 @@ public abstract class BlockBaseController : MonoBehaviour
 {
     protected BlockController blockController;
     protected PlayerInput playerInput;
+    protected SoundEventEmitter eventEmitter;
 
     public virtual void Awake()
     {
@@ -16,15 +17,14 @@ public abstract class BlockBaseController : MonoBehaviour
     public virtual void Start()
     {
         playerInput = PlayerInput.instance;
-        playerInput.OnHorizontalInputDown += OnHorizontalInputDown;
+        eventEmitter = SoundEventEmitter.instance;
+    }
+
+    public virtual void Update()
+    {
     }
 
     public virtual void OnDestroy()
-    {
-        playerInput.OnHorizontalInputDown -= OnHorizontalInputDown;
-    }
-
-    public virtual void OnHorizontalInputDown(int direction)
     {
     }
 
