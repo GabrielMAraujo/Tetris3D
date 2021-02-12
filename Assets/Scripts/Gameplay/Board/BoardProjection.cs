@@ -19,7 +19,6 @@ public class BoardProjection : MonoBehaviour
 
     private void Start()
     {
-        
     }
 
     private void OnDestroy()
@@ -31,6 +30,12 @@ public class BoardProjection : MonoBehaviour
 
     private void OnNewBlock(GameObject block, Vector2Int position)
     {
+        //Destroy current projection if exists
+        if(projectionBlock != null)
+        {
+            Destroy(projectionBlock);
+        }
+
         //Create projection based on new block
         projectionBlock = Instantiate(block, Vector3.zero, Quaternion.identity);
         projectionBlock.name = "Projection";
@@ -57,14 +62,17 @@ public class BoardProjection : MonoBehaviour
     { 
         int highestColumn = 0;
 
-        foreach(var tile in tiles)
+        if (tiles != null)
         {
-            int height = GetTileProjectionHeight(Vector2Int.RoundToInt(tile.transform.position));
-
-            //Stores highest Y value in variable
-            if(height > highestColumn)
+            foreach (var tile in tiles)
             {
-                highestColumn = height;
+                int height = GetTileProjectionHeight(Vector2Int.RoundToInt(tile.transform.position));
+
+                //Stores highest Y value in variable
+                if (height > highestColumn)
+                {
+                    highestColumn = height;
+                }
             }
         }
 

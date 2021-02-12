@@ -111,6 +111,8 @@ public class BlockController : MonoBehaviour
         currentBlock.transform.position = transform.position;
         currentBlock.transform.SetParent(transform);
         tiles = currentBlock.GetComponentsInChildren<BlockTile>().ToList();
+
+        OnNewBlock?.Invoke(currentBlock, Vector2Int.RoundToInt(transform.position));
     }
 
     //Settle block complete routine
