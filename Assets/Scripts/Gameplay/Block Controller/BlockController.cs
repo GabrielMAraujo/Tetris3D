@@ -4,10 +4,14 @@ using System.Linq;
 using UnityEngine;
 
 public delegate void BlockTilesCallback(List<Vector2Int> positions, bool speed);
+public delegate void BlockMovementCallback(List<BlockTile> tiles, Vector2Int position);
+public delegate void BlockCallback(GameObject block, Vector2Int position);
 
 public class BlockController : MonoBehaviour
 {
     public event BlockTilesCallback OnBlockSettle;
+    public event BlockMovementCallback OnMovement;
+    public event BlockCallback OnNewBlock;
 
     public Game game;
     public BlockControllerData blockControllerData;
@@ -50,12 +54,16 @@ public class BlockController : MonoBehaviour
 
     private void Start()
     {
-        currentBlock = Instantiate(GetRandomBlock(), transform.position, Quaternion.identity);
+        GameObject prefab = GetRandomBlock();
+
+        currentBlock = Instantiate(prefab, transform.position, Quaternion.identity);
         currentBlock.transform.SetParent(transform);
 
         tiles = currentBlock.GetComponentsInChildren<BlockTile>().ToList();
 
         transform.position = blockControllerData.blockStartingPosition;
+
+        OnNewBlock?.Invoke(prefab, Vector2Int.RoundToInt(transform.position));
     }
 
     private void OnDestroy()
@@ -75,6 +83,13 @@ public class BlockController : MonoBehaviour
     {
         hasSpeed = true;
     }
+
+    //Triggers OnMovement event from behaviour classes
+    public void TriggerOnMovement()
+    {
+        OnMovement?.Invoke(tiles, Vector2Int.RoundToInt(currentBlock.transform.position));
+    }
+
     #endregion
 
     //Get random block from block pool

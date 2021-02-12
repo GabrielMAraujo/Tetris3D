@@ -8,22 +8,28 @@ public class Board : MonoBehaviour
     public Game game;
     public BlockController blockController;
     public Score score;
+    public BoardData boardData;
 
     //Game object which parents settled blocks
     [HideInInspector]
     public GameObject blocksContainer;
+
+    private BoardProjection boardProjection;
 
     private int[,] boardMatrix;
 
     private void Awake()
     {
         blockController.OnBlockSettle += OnBlockSettle;
+
+        //Generate individual behaviour scripts in the same GameObject
+        boardProjection = gameObject.AddComponent<BoardProjection>();
     }
 
     private void Start()
     {
         //Create int array according to board size
-        boardMatrix = new int[game.gameData.boardSize.x, game.gameData.boardSize.y];
+        boardMatrix = new int[boardData.boardSize.x, boardData.boardSize.y];
         blocksContainer = new GameObject();
         blocksContainer.name = "Settled Blocks Container";
         blocksContainer.transform.SetParent(transform);
@@ -61,7 +67,7 @@ public class Board : MonoBehaviour
     public bool HasTile(Vector2Int position)
     {
         //Out of bounds check
-        Rect boardRect = new Rect(0, 0, game.gameData.boardSize.x, game.gameData.boardSize.y);
+        Rect boardRect = new Rect(0, 0, boardData.boardSize.x, boardData.boardSize.y);
 
         bool outOfBounds = !boardRect.Contains(position);
 
@@ -101,7 +107,7 @@ public class Board : MonoBehaviour
     {
         bool successAll = false;
         //Iterate through row in board matrix to see if all elements are 1. If a 0 is found, interrupt loop
-        for (int i = 0; i < game.gameData.boardSize.x; i++)
+        for (int i = 0; i < boardData.boardSize.x; i++)
         {
             successAll = HasTile(new Vector2Int(i, row));
 
@@ -116,18 +122,18 @@ public class Board : MonoBehaviour
     private void RemoveRowFromMatrix(int row)
     {
         //Start from row to be removed, and goes up until the second last row
-        for(int j = row; j < game.gameData.boardSize.y - 1; j++)
+        for(int j = row; j < boardData.boardSize.y - 1; j++)
         {
-            for (int i = 0; i < game.gameData.boardSize.x; i++) {
+            for (int i = 0; i < boardData.boardSize.x; i++) {
                 //Store upper row element value in lower row
                 boardMatrix[i,j] = boardMatrix[i,j+1];
             }
         }
 
         //For the last row, fill it with zeroes
-        for(int i = 0; i < game.gameData.boardSize.x; i++)
+        for(int i = 0; i < boardData.boardSize.x; i++)
         {
-            boardMatrix[i, game.gameData.boardSize.y - 1] = 0;
+            boardMatrix[i, boardData.boardSize.y - 1] = 0;
         }
     }
 

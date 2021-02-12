@@ -28,6 +28,7 @@ public class BlockHorizontalController : BlockBaseController
         if (!blockController.isRotating && CanBlockMove(new Vector2Int(direction, 0)))
         {
             transform.position += Vector3.right * direction;
+            blockController.TriggerOnMovement();
         }
     }
 }

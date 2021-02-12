@@ -1041,6 +1041,7 @@ MonoBehaviour:
   game: {fileID: 38980609}
   blockController: {fileID: 1771615894}
   score: {fileID: 38980610}
+  boardData: {fileID: 11400000, guid: 269bd545279ff45649df02271a3adc0c, type: 2}
   blocksContainer: {fileID: 0}
 --- !u!1 &1731505146
 GameObject:

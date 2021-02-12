@@ -40,7 +40,7 @@ public abstract class BlockBaseController : MonoBehaviour
             {
                 successAll = tile.CanMove(
                     moveDirection,
-                    blockController.game.gameData.boardSize,
+                    blockController.board.boardData.boardSize,
                     blockController.board,
                     blockController.isRotating,
                     rotation,
