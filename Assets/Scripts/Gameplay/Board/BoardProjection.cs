@@ -40,6 +40,12 @@ public class BoardProjection : MonoBehaviour
         projectionBlock = Instantiate(block, Vector3.zero, Quaternion.identity);
         projectionBlock.name = "Projection";
 
+        //Remove script from projection tiles
+        foreach(var blockTile in projectionBlock.GetComponentsInChildren<BlockTile>().ToList())
+        {
+            Destroy(blockTile);
+        }
+
         //Change color alpha to make block tiles look like a projection
 
         List<Renderer> renderers = projectionBlock.GetComponentsInChildren<Renderer>().ToList();
@@ -55,7 +61,7 @@ public class BoardProjection : MonoBehaviour
         }
 
         //Call first movement update
-        OnMovement(projectionBlock.GetComponentsInChildren<BlockTile>().ToList(), position);
+        OnMovement(block.GetComponentsInChildren<BlockTile>().ToList(), position);
     }
 
     private void OnMovement(List<BlockTile> tiles, Vector2Int position)
@@ -67,7 +73,7 @@ public class BoardProjection : MonoBehaviour
             foreach (var tile in tiles)
             {
                 int height = GetTileProjectionHeight(Vector2Int.RoundToInt(tile.transform.position));
-
+                print(tile.transform.position);
                 //Stores highest Y value in variable
                 if (height > highestColumn)
                 {
@@ -87,12 +93,13 @@ public class BoardProjection : MonoBehaviour
         int result = 0;
 
         //Top-down iteration through column until finding block or bound collision
-        for(int j = tilePosition.y; j > 0; j--)
+        for(int j = tilePosition.y; j >= 0; j--)
         {
             if(board.HasTile(new Vector2Int(tilePosition.x, j)))
             {
                 //Adding 1 to put object above collision spot
                 result = j + 1;
+                break;
             }
         }
 

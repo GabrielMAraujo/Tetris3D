@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Board Data
   m_EditorClassIdentifier: 
   boardSize: {x: 10, y: 22}
-  projectionAlpha: 0.5
+  projectionAlpha: 0.45
