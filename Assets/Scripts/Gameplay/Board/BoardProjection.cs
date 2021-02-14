@@ -10,6 +10,9 @@ public class BoardProjection : MonoBehaviour
 
     private GameObject projectionBlock;
 
+    //Stores the tile in which the projection will be based
+    private BlockTile collisionTile;
+
     private void Awake()
     {
         board = GetComponent<Board>();
@@ -40,8 +43,11 @@ public class BoardProjection : MonoBehaviour
         projectionBlock = Instantiate(block, Vector3.zero, Quaternion.identity);
         projectionBlock.name = "Projection";
 
+        //Call first movement update
+        OnMovement(board.blockController.gameObject);
+
         //Remove script from projection tiles
-        foreach(var blockTile in projectionBlock.GetComponentsInChildren<BlockTile>().ToList())
+        foreach (var blockTile in projectionBlock.GetComponentsInChildren<BlockTile>().ToList())
         {
             Destroy(blockTile);
         }
@@ -59,50 +65,56 @@ public class BoardProjection : MonoBehaviour
                 board.boardData.projectionAlpha
             );
         }
-
-        //Call first movement update
-        OnMovement(block.GetComponentsInChildren<BlockTile>().ToList(), position);
     }
 
-    private void OnMovement(List<BlockTile> tiles, Vector2Int position)
-    { 
-        int highestColumn = 0;
-
-        if (tiles != null)
-        {
-            foreach (var tile in tiles)
-            {
-                int height = GetTileProjectionHeight(Vector2Int.RoundToInt(tile.transform.position));
-                print(tile.transform.position);
-                //Stores highest Y value in variable
-                if (height > highestColumn)
-                {
-                    highestColumn = height;
-                }
-            }
-        }
-
-        //Move projection in calculated height
-        projectionBlock.transform.position = new Vector3(position.x, highestColumn, 0);
-
-    }
-
-    //Gets tile's valid Y coordinate in projected downward collision 
-    private int GetTileProjectionHeight(Vector2Int tilePosition)
+    private void OnMovement(GameObject controller)
     {
-        int result = 0;
+        //Maintain position and rotation from original block
+        projectionBlock.transform.position = controller.transform.position;
+        projectionBlock.transform.rotation = controller.transform.rotation;
 
-        //Top-down iteration through column until finding block or bound collision
-        for(int j = tilePosition.y; j >= 0; j--)
+        List<BlockTile> tiles = controller.GetComponentsInChildren<BlockTile>().ToList();
+
+        //Iterate downwards from original postion until collide with something
+        int initialHeight = Mathf.RoundToInt(projectionBlock.transform.position.y);
+        for (int j = initialHeight; j >= 0; j--)
         {
-            if(board.HasTile(new Vector2Int(tilePosition.x, j)))
+            Vector2Int moveAmount = Vector2Int.down + (Vector2Int.down * (initialHeight - j));
+
+            //If projection can move down without colliding with something, do so
+            if(CanProjectionMove(tiles, moveAmount))
             {
-                //Adding 1 to put object above collision spot
-                result = j + 1;
+                projectionBlock.transform.position += Vector3.down;
+            }
+            //If not, interrupt loop and exit, projection got as far as it could
+            else
+            {
                 break;
             }
         }
 
-        return result;
+    }
+
+    //Verify all projection tiles movement possibility
+    private bool CanProjectionMove(List<BlockTile> tiles, Vector2Int moveDirection)
+    {
+        bool successAll = false;
+
+        //All tiles have to be able to move in order to confirm movement
+        if (tiles != null)
+        {
+            foreach (var tile in tiles)
+            {
+                successAll = !board.HasTile(Vector2Int.RoundToInt(tile.transform.position) + moveDirection);
+
+                //If failed, interrupt loop
+                if (!successAll)
+                {
+                    break;
+                }
+            }
+        }
+
+        return successAll;
     }
 }

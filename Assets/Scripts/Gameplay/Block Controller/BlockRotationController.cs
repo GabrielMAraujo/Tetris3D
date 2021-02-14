@@ -88,6 +88,8 @@ public class BlockRotationController : BlockBaseController
             }
             blockController.isRotating = false;
             blockController.allowRotation = true;
+
+            blockController.TriggerOnMovement();
         }
     }
 }

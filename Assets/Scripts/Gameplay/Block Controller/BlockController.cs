@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 public delegate void BlockTilesCallback(List<Vector2Int> positions, bool speed);
-public delegate void BlockMovementCallback(List<BlockTile> tiles, Vector2Int position);
+public delegate void BlockMovementCallback(GameObject controller);
 public delegate void BlockCallback(GameObject block, Vector2Int position);
 
 public class BlockController : MonoBehaviour
@@ -87,7 +87,12 @@ public class BlockController : MonoBehaviour
     //Triggers OnMovement event from behaviour classes
     public void TriggerOnMovement()
     {
-        OnMovement?.Invoke(tiles, Vector2Int.RoundToInt(currentBlock.transform.position));
+        OnMovement?.Invoke(gameObject);
+    }
+
+    public void TriggerOnNewBlock()
+    {
+        OnNewBlock?.Invoke(currentBlock, Vector2Int.RoundToInt(transform.position));
     }
 
     #endregion
@@ -111,8 +116,6 @@ public class BlockController : MonoBehaviour
         currentBlock.transform.position = transform.position;
         currentBlock.transform.SetParent(transform);
         tiles = currentBlock.GetComponentsInChildren<BlockTile>().ToList();
-
-        OnNewBlock?.Invoke(currentBlock, Vector2Int.RoundToInt(transform.position));
     }
 
     //Settle block complete routine
@@ -126,6 +129,7 @@ public class BlockController : MonoBehaviour
 
         //Resets position to the top
         transform.position = blockControllerData.blockStartingPosition;
+        OnNewBlock?.Invoke(currentBlock, Vector2Int.RoundToInt(transform.position));
     }
 
 

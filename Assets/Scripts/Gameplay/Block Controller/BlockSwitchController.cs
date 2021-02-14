@@ -42,6 +42,7 @@ public class BlockSwitchController : BlockBaseController
                 GameObject aux = blockController.currentBlock;
                 blockController.GetNextBlock();
                 blockController.nextBlock.SwitchBlock(aux);
+                blockController.TriggerOnNewBlock();
             }
         }
     }
